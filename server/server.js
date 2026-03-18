@@ -5,6 +5,11 @@ const {Server} = require('socket.io')
 // So http for createServer, that server receives app as the route handler. Socket.io allows bidirectional comms, without making lots of reqs
 
 const app = express()
+app.use(express.json()) // So that app can parse JSON and add it to the body 
+
+const authRoutes = require('./Routes/auth')
+app.use('/auth', authRoutes) // As a middleware it send all routes that have the word auth to the authRoutes we imported
+
 const server = http.createServer(app) // Any req? send it to Express
 const io = new Server(server,{
 // Without cors it wont accept request from another port React Port 
@@ -12,6 +17,8 @@ const io = new Server(server,{
         origin : "http://localhost:5173"
     }
 }) // io will live within server for websockets 
+
+
 
 
 io.on("connection", (socket) => {
