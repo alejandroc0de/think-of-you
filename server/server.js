@@ -1,3 +1,4 @@
+const pool = require('./db') // Imported from db file to make the queries
 const express = require ('express')
 const http = require('http') 
 const {Server} = require('socket.io')
@@ -11,7 +12,6 @@ const io = new Server(server,{
         origin : "http://localhost:5173"
     }
 }) // io will live within server for websockets 
-
 
 
 io.on("connection", (socket) => {
