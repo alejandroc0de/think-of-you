@@ -7,9 +7,6 @@ const {Server} = require('socket.io')
 const app = express()
 app.use(express.json()) // So that app can parse JSON and add it to the body 
 
-const authRoutes = require('./Routes/auth')
-app.use('/auth', authRoutes) // As a middleware it send all routes that have the word auth to the authRoutes we imported
-
 const server = http.createServer(app) // Any req? send it to Express
 const io = new Server(server,{
 // Without cors it wont accept request from another port React Port 
@@ -19,19 +16,23 @@ const io = new Server(server,{
 }) // io will live within server for websockets 
 
 
+// ROUTES FOR THE APP 
+
+
+const authRoutes = require('./Routes/auth')
+app.use('/auth', authRoutes) // As a middleware it send all routes that have the word auth to the authRoutes we imported
+
+
+const messageRoute = require('./Routes/messages')
+app.use('/messages', messageRoute)
+
+
 
 
 io.on("connection", (socket) => {
     console.log("Someone connected to app", socket.id)
 })
 
-
-
-// Route Get 
-app.get('/', (req,res) => {
-    console.log("App waiting for get request")
-    res.send("Response sent")
-})
 
 server.listen(3000, () => {
     console.log("Server running in localhost")
