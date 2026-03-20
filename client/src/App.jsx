@@ -1,15 +1,27 @@
-import './App.css'
-import {io} from 'socket.io-client'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
+import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
+import Home from './pages/app/Home'
+
 
 function App() {
-  const socket = io("http://localhost:3000")
+  
 
 
 
   return(
-    <h1>
-      Hello
-    </h1>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element = {<Navigate to= "/login"/>}/>
+          <Route path='/login' element = {<Login />} /> 
+          <Route path='/register' element = {<Register />} />
+          <Route path='/home' element = {<Home />} />
+        </Routes>
+      
+      
+      </BrowserRouter>
+    </div>
   )
 }
 
