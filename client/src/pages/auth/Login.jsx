@@ -22,15 +22,22 @@ function Login(){
     }
 
 
-    function handleSubmit(){
-
+    async function handleSubmit(){
+        try {
+            const result = await fetch("/auth/login",{
+                method:"POST",
+                headers : {"Content-Type":"application/json"},
+                body : JSON.stringify({})
+            })
+            
+        } catch (error) {
+            
+        }
     }
 
     function handleRegister(){
         navigate('/register')
     }
-
-
 
 
 
