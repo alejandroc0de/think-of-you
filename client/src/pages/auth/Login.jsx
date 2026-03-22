@@ -22,16 +22,19 @@ function Login(){
     }
 
 
+    // This functions handles the login, makes a req to the back, receives the token and redirects to /home
     async function handleSubmit(){
         try {
-            const result = await fetch("/auth/login",{
+            const result = await fetch("http://localhost:3000/auth/login",{
                 method:"POST",
                 headers : {"Content-Type":"application/json"},
-                body : JSON.stringify({})
-            })
-            
+                body : JSON.stringify({username : username, password : password})
+            });
+            const data = await result.json();
+            localStorage.setItem("token", data.token) // Save the token retorned by the back to the LocalStorage
+            navigate('/home')
         } catch (error) {
-            
+            console.log("Error when trying to login" + error)
         }
     }
 
