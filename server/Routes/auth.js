@@ -16,9 +16,9 @@ router.post('/register', async (req,res) =>{
         const {name,username,password} = req.body
         const hashedPassword = await bcrypt.hash(password,saltRounds) // Encrypt password
         const result = await pool.query("INSERT INTO users (name, username, password) VALUES ($1, $2, $3)",[name,username,hashedPassword])
-        res.status(201).send("Response Ok")
+        res.status(201).json({message:"Response Ok"})
     } catch (error) {
-        res.status(400).send("Error when registering to the Database")
+        res.status(400).json({message:"Error when registering to the Database", error : error})
     }
 })
 
