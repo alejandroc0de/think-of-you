@@ -25,7 +25,7 @@ function Login(){
     // This functions handles the login, makes a req to the back, receives the token and redirects to /home
     async function handleSubmit(){
         try {
-            const result = await fetch("http://localhost:3000/auth/login",{
+            const result = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`,{
                 method:"POST",
                 headers : {"Content-Type":"application/json"},
                 body : JSON.stringify({username : username, password : password})
