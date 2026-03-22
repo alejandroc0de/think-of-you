@@ -15,10 +15,10 @@ require('dotenv').config()
                 console.log(decoded)
                 next();
             } catch (error) {
-                res.status(401).send("Token false")
+                res.status(401).json({message : "Token false"})
             }
         }else{
-            res.status(400).send("No TOKEN sent in headers")
+            res.status(400).json({message : "No TOKEN sent in headers"})
         }
     }
 

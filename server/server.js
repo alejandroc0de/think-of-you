@@ -12,12 +12,16 @@ app.use(express.json()) // So that app can parse JSON and add it to the body
 
 const server = http.createServer(app) // Any req? send it to Express
 const ioServer = new Server(server,{
-// Without cors it wont accept request from another port React Port 
+// Without cors it wont accept request from another port React Port for Socket.io
     cors:{
-        origin : "http://localhost:5173"
+        origin : process.env.CLIENT_URL
     }
 }) // io will live within server for websockets 
 
+
+// This is used to allow fetch request tru express from the front
+const cors = require('cors')
+app.use(cors({ origin: process.env.CLIENT_URL}))
 
 // ROUTES FOR THE APP 
 
