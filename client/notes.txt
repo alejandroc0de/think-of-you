@@ -12,3 +12,6 @@
 
 if(!result.ok) checks if the answers from the back is in the 200 range 
 When username is already in postgress, postgres returns error 23505 so i save it in the json of the res and validate in the front to show descriptive error
+
+# If i do a fetch within a useEffect first i declare the function and at then end of useEffect i call the function 
+useEffect solo puede retornar una clean up o nada, hacer fetch y await dentro del effect pues devuelve una promesa

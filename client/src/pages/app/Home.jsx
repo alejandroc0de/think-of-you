@@ -7,6 +7,7 @@ function Home(){
     // DECLARATIONS ---------------------------------------------------
     const socketInfo = useRef(null)
     const [lastMessage,setLastMessage] = useState({sender:null,time:null,message:null})
+    const [recentMessages, setRecentMessages] = useState([]) // Array of messages 
 
     // ----------------------------------------------------------------
 
@@ -30,6 +31,31 @@ function Home(){
             socket.disconnect()
         };
     },[]); // Empty dependecy array, so when mounted 
+
+
+
+    /* Load the messages from the db once client logs in ----------------------------- */ 
+
+    useEffect(() => {
+        async function fetchData(){
+            try {
+                const result = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
+                    method: "GET",
+                    headers : {'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+                                'Content-Type' : "application/json"}
+                })
+                const data = await result.json()
+                setRecentMessages(data.recentMessages) // Returned by backend in the res json 
+            } catch (error) {
+                console.log("Error fetching last messages " + error)
+            }
+        };
+        // No clean up needed since fetch doesnt leave anything open 
+        fetchData()
+    },[]) // On mounting 
+
+
+
  
 
 
@@ -59,10 +85,8 @@ function Home(){
 
 
     // TODO
+    // Routes saves the messages to the array, now do a map to show those messages to the client
     // Gotta improve the confirmation messages 
-
-
-
 
 
 
