@@ -18,7 +18,7 @@ router.post('/register', async (req,res) =>{
         const result = await pool.query("INSERT INTO users (name, username, password) VALUES ($1, $2, $3)",[name,username,hashedPassword])
         res.status(201).json({message:"Response Ok"})
     } catch (error) {
-        res.status(400).json({message:"Error when registering to the Database", error : error})
+        res.status(400).json({message: "Error when registering to the db", error: error.code})
     }
 })
 

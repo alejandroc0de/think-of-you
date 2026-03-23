@@ -30,12 +30,17 @@ function Register(){
                 headers : {"Content-Type":"application/json"},
                 body : JSON.stringify({name : name, username: username, password: password})
             });
-            if(result.ok){
-              navigate('/login')
-            }else{
-                console.log(result)
-                // GOTTA WORK ON WHAT IF USERNAME ALREADY EXISTS 
+            if(result.statusCode !== 200){
+                const data = await result.json()
+                if(data.error === "23505"){ // code for unique clause violation 
+                    window.alert("Username Already Taken")
+                    return
+                }else{
+                    window.alert("Error when saving info to the DB")
+                    return
+                }
             }
+            navigate('/login')
         } catch (error) {
             window.alert("Error when trying to login " + error)
         }
