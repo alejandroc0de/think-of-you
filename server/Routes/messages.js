@@ -10,6 +10,10 @@ const verifyToken = require('../middleware/auth')
 // WE NEED ACCESS TO IO IN MESSAGES, so we receive io from server, then using arrow function complete the logic and finally return the router since server is waiting for one. 
 module.exports = (io, connectedUsers) => {
 
+
+
+    // ROUTE SAVE A MESSAGE TO DB AND SOCKET ---------------------------------------------------------------
+
     // We place the middleware before so we first check that 
     router.post('/', verifyToken, async (req,res,) => {
         // Extract data from the body, id comes from the decoded middleware
@@ -56,6 +60,22 @@ module.exports = (io, connectedUsers) => {
             console.log(error)
         }
     })
+
+
+    // ROUTE TO GET MESSAGES ONCE RELOAD PAGE --------------------------------------------------------
+
+    router.get('/',verifyToken, async(req, res) => {
+        const sender = req.user.id // via middleware id for sender
+        try {
+            const result = await pool.query("SELECT * FROM messages WHERE sender = $1 OR receiver = $1 ORDER BY time_sent DESC LIMIT 10",
+                                            [sender])
+            res.status(200).json({recentMessages: result.rows, message: "Messages fetched properly"})
+        } catch (error) {
+            res.status(500).json({message: "Error fetching last messages", error : error})
+        }
+    })
+
+
 
     return router
 }

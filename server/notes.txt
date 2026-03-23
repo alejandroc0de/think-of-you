@@ -1,0 +1,5 @@
+#So when a message hits socket, i add it to the array messages, so i dont do another get req
+and only do a get each time i reload the page
+
+# When client connects to home we get the last messages from the db using a useEffect, since a client can 
+only have one partner bruh, we use that as the where clause on the query, the sender info comes from the token via middleware 
