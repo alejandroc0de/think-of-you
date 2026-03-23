@@ -9,3 +9,6 @@
 # Everything outside the component is called when imported so the sending of the token has to happen once the component is mounted, hence inside the component using a useEffect 
 
 # I created a ENV for the client, in react has to start with VITE_ and the use variables for the code fetchs
+
+if(!result.ok) checks if the answers from the back is in the 200 range 
+When username is already in postgress, postgres returns error 23505 so i save it in the json of the res and validate in the front to show descriptive error

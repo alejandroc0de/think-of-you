@@ -30,7 +30,7 @@ function Register(){
                 headers : {"Content-Type":"application/json"},
                 body : JSON.stringify({name : name, username: username, password: password})
             });
-            if(result.statusCode !== 200){
+            if(!result.ok){
                 const data = await result.json()
                 if(data.error === "23505"){ // code for unique clause violation 
                     window.alert("Username Already Taken")
