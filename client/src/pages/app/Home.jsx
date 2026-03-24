@@ -23,7 +23,7 @@ function Home(){
 
         // Listener for socket incoming----
         socket.on("send", (data) => {
-            setLastMessage({sender:data.sender, time:data.time, message:data.message}) // Set incoming message
+            setRecentMessages(prev => [data, ...prev]) // Adding socket msg to array from db, using a updater function to get latest value  
         })
 
         return()=> {
@@ -83,9 +83,14 @@ function Home(){
 
     }
 
+    // Function to format time to locale time 
+    function formatTime(timestamp){
+        return new Date(timestamp).toLocaleString()
+    }
+
 
     // TODO
-    // Routes saves the messages to the array, now do a map to show those messages to the client
+    // Messages are printed, but now gotta add the message just sent to the display messages 
     // Gotta improve the confirmation messages 
 
 
@@ -106,6 +111,11 @@ function Home(){
 
             <div id='lastMessages'>
                 {lastMessage.message && <p>{lastMessage.message}</p>}
+                {recentMessages && recentMessages.map((item,index) => (
+                    <div key={index}>
+                        <p>{item.message_sent} at {formatTime(item.time_sent)}</p> 
+                    </div>
+                ))}
             </div>
 
 
