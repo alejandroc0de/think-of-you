@@ -15,3 +15,7 @@ When username is already in postgress, postgres returns error 23505 so i save it
 
 # If i do a fetch within a useEffect first i declare the function and at then end of useEffect i call the function 
 useEffect solo puede retornar una clean up o nada, hacer fetch y await dentro del effect pues devuelve una promesa
+
+# To update the map i returnt the obj entered by the back to the front, then add it to the array of recentmessages, which then re renders the map 
+# So ai has suggested to emit message to myself also and not only the sender, cause i have 2 sources of truth, and then use the http to just render ui
+sounds ok, but i will give it some more thought, the main idea is to emit to both me and the sender when i send message so it gets saves to the db also.

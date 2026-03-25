@@ -75,7 +75,8 @@ function Home(){
             }
             else{
                 const data = await result.json()
-                window.alert(data.message)
+                // Insert message to the messages array to be able to update it
+                setRecentMessages(prev  => [data.messageObj.rows[0], ...prev])
             }
         } catch (error) {
             console.log("Error when sending message" + error)
@@ -113,11 +114,10 @@ function Home(){
                 {lastMessage.message && <p>{lastMessage.message}</p>}
                 {recentMessages && recentMessages.map((item,index) => (
                     <div key={index}>
-                        <p>{item.message_sent} at {formatTime(item.time_sent)}</p> 
+                        <p>Sender : {item.sender} - {item.message_sent} at {formatTime(item.time_sent)}</p> 
                     </div>
                 ))}
             </div>
-
 
         </div>
     )

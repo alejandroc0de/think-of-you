@@ -50,10 +50,10 @@ module.exports = (io, connectedUsers) => {
         try {
             const insertResult = await pool.query("INSERT INTO messages (sender, receiver, message_sent) VALUES ($1,$2,$3) RETURNING *", // Returning to access what was entered
                                                 [sender, receiver,message])
-            res.status(201).json({message : "Message saved properly"})
+            res.status(201).json({message : "Message saved properly", messageObj : insertResult}) // Rerturning entered
             // Realtime Update using SOCKET IO
             if(connectedUsers[receiver]){
-                connectedUsers[receiver].emit("send",{"sender": sender, "time": insertResult.rows[0].time_sent, "message":message}) // Send the message to the receiver in Realtime
+                connectedUsers[receiver].emit("send",{"sender": sender, "time_sent": insertResult.rows[0].time_sent, "message_sent":message}) // Send the message to the receiver in Realtime
             }
         } catch (error) {
             res.status(500).json({message : "There is a problem saving the message to the DB"})
