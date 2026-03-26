@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {io} from 'socket.io-client'
-
+import { jwtDecode } from "jwt-decode"; // Decode token with username and id 
+ 
 
 function Home(){
 
@@ -8,8 +9,14 @@ function Home(){
     const socketInfo = useRef(null)
     const [recentMessages, setRecentMessages] = useState([]) // Array of messages 
     const bottomRef = useRef(null) // Ref for the message div and auto scroll
+    const [username, setUsername] = useState("")
 
     // ----------------------------------------------------------------
+
+    // Decode token to access the username and id, wont change so const is ok and NOT useState
+    const decodedToken = jwtDecode(localStorage.getItem("token"))
+    const myId = decodedToken.id
+    const myUsername = decodedToken.username
 
 
 
@@ -101,7 +108,8 @@ function Home(){
 
 
     // TODO
-    // Gotta handle the amount of messages printed, and double check the code for bugs 
+    // Gotta handle the amount of messages printed,
+    // Logout
     // Gotta improve the confirmation messages 
 
 
@@ -111,7 +119,7 @@ function Home(){
 
         <div>
             <div id='header'>
-                <h1> Welcome User </h1>
+                <h1> Welcome {myUsername} </h1>
             </div>
 
             <div id='content'>
@@ -121,7 +129,7 @@ function Home(){
             <div className='border-2 h-50 overflow-scroll' id='lastMessages'>
                 {recentMessages && recentMessages.map((item,index) => (
                     <div key={index}>
-                        <p>Sender : {item.sender} - {item.message_sent} at {formatTime(item.time_sent)}</p> 
+                        <p>{item.sender == myId ? "You":"Partner" } - {item.message_sent} at {formatTime(item.time_sent)}</p> 
                     </div>
                 ))}
                 <div ref={bottomRef}></div>

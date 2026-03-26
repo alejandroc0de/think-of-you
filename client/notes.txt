@@ -23,3 +23,6 @@ sounds ok, but i will give it some more thought, the main idea is to emit to bot
 # The message is added to the top of the array because of the setup of the spread 
 
 # So i will add a empty div to the bottom of the messages div, and everytime messages changes scroll to that div so last message will always show. Ref es como doc.getelementById
+
+# the token has username and id, with that info we can use the username, so install jwt-decode and decode 
+# Usestate is mainly for values that change, my username and myid are const and wont change so const within the component is ok 
