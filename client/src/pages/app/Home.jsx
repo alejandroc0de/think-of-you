@@ -6,7 +6,6 @@ function Home(){
 
     // DECLARATIONS ---------------------------------------------------
     const socketInfo = useRef(null)
-    const [lastMessage,setLastMessage] = useState({sender:null,time:null,message:null})
     const [recentMessages, setRecentMessages] = useState([]) // Array of messages 
 
     // ----------------------------------------------------------------
@@ -23,7 +22,8 @@ function Home(){
 
         // Listener for socket incoming----
         socket.on("send", (data) => {
-            setRecentMessages(prev => [data, ...prev]) // Adding socket msg to array from db, using a updater function to get latest value  
+            setRecentMessages(prev => [...prev, data]) // Adding socket msg to array from db, using a updater function to get latest value 
+            // prev is the most recent value, so i add new message to the top of the list  
         })
 
         return()=> {
@@ -45,7 +45,7 @@ function Home(){
                                 'Content-Type' : "application/json"}
                 })
                 const data = await result.json()
-                setRecentMessages(data.recentMessages) // Returned by backend in the res json 
+                setRecentMessages(data.recentMessages.reverse()) // Returned by backend in the res json 
             } catch (error) {
                 console.log("Error fetching last messages " + error)
             }
@@ -76,7 +76,7 @@ function Home(){
             else{
                 const data = await result.json()
                 // Insert message to the messages array to be able to update it
-                setRecentMessages(prev  => [data.messageObj.rows[0], ...prev])
+                setRecentMessages(prev  => [...prev, data.messageObj.rows[0] ]) // This comes from the back, to be able to use Timestamp from Psql
             }
         } catch (error) {
             console.log("Error when sending message" + error)
@@ -91,12 +91,10 @@ function Home(){
 
 
     // TODO
-    // Messages are printed, but now gotta add the message just sent to the display messages 
+    // Gotta handle the amount of messages printed, and double check the code for bugs 
     // Gotta improve the confirmation messages 
 
 
-
-    
 
 
     return (
@@ -110,8 +108,7 @@ function Home(){
                 <button onClick={handleSendMessage}>I am thinking of you</button>
             </div>
 
-            <div id='lastMessages'>
-                {lastMessage.message && <p>{lastMessage.message}</p>}
+            <div className='' id='lastMessages'>
                 {recentMessages && recentMessages.map((item,index) => (
                     <div key={index}>
                         <p>Sender : {item.sender} - {item.message_sent} at {formatTime(item.time_sent)}</p> 

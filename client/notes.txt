@@ -19,3 +19,5 @@ useEffect solo puede retornar una clean up o nada, hacer fetch y await dentro de
 # To update the map i returnt the obj entered by the back to the front, then add it to the array of recentmessages, which then re renders the map 
 # So ai has suggested to emit message to myself also and not only the sender, cause i have 2 sources of truth, and then use the http to just render ui
 sounds ok, but i will give it some more thought, the main idea is to emit to both me and the sender when i send message so it gets saves to the db also.
+
+# The message is added to the top of the array because of the setup of the spread 
