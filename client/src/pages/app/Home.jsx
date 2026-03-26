@@ -7,6 +7,7 @@ function Home(){
     // DECLARATIONS ---------------------------------------------------
     const socketInfo = useRef(null)
     const [recentMessages, setRecentMessages] = useState([]) // Array of messages 
+    const bottomRef = useRef(null) // Ref for the message div and auto scroll
 
     // ----------------------------------------------------------------
 
@@ -54,6 +55,15 @@ function Home(){
         fetchData()
     },[]) // On mounting 
 
+    
+    /* UseEffect for scroll to latest message once messages gets changed ------------- */
+
+    useEffect(() => {
+        if(bottomRef.current){
+            bottomRef.current.scrollIntoView({behavior : "smooth", block : "end"})
+        }
+        // If there is a ref scroll to the latest message
+    },[recentMessages])
 
 
  
@@ -105,15 +115,16 @@ function Home(){
             </div>
 
             <div id='content'>
-                <button onClick={handleSendMessage}>I am thinking of you</button>
+                <button className='border-2 mb-10' onClick={handleSendMessage}>I am thinking of you</button>
             </div>
 
-            <div className='' id='lastMessages'>
+            <div className='border-2 h-50 overflow-scroll' id='lastMessages'>
                 {recentMessages && recentMessages.map((item,index) => (
                     <div key={index}>
                         <p>Sender : {item.sender} - {item.message_sent} at {formatTime(item.time_sent)}</p> 
                     </div>
                 ))}
+                <div ref={bottomRef}></div>
             </div>
 
         </div>
