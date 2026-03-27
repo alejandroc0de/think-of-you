@@ -67,7 +67,7 @@ module.exports = (io, connectedUsers) => {
     router.get('/',verifyToken, async(req, res) => {
         const sender = req.user.id // via middleware id for sender
         try {
-            const result = await pool.query("SELECT * FROM messages WHERE sender = $1 OR receiver = $1 ORDER BY time_sent DESC LIMIT 10",
+            const result = await pool.query("SELECT * FROM messages WHERE sender = $1 OR receiver = $1 ORDER BY time_sent DESC LIMIT 20",
                                             [sender])
             res.status(200).json({recentMessages: result.rows, message: "Messages fetched properly"})
         } catch (error) {

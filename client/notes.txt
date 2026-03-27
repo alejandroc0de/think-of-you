@@ -26,3 +26,6 @@ sounds ok, but i will give it some more thought, the main idea is to emit to bot
 
 # the token has username and id, with that info we can use the username, so install jwt-decode and decode 
 # Usestate is mainly for values that change, my username and myid are const and wont change so const within the component is ok 
+
+## PROTECTED ROUTE, so i created a new folder Component, it has the protected route of home, i call it before rendering home as a route, it acts as a middleware, calls the function 
+envolving and within that function if there is not a token i call login, otherwise i return the children which is the same home

@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from "react-router-dom"
 import {io} from 'socket.io-client'
 import { jwtDecode } from "jwt-decode"; // Decode token with username and id 
  
+
+
 
 function Home(){
 
@@ -9,14 +12,28 @@ function Home(){
     const socketInfo = useRef(null)
     const [recentMessages, setRecentMessages] = useState([]) // Array of messages 
     const bottomRef = useRef(null) // Ref for the message div and auto scroll
-    const [username, setUsername] = useState("")
+    const navigate = useNavigate()
 
     // ----------------------------------------------------------------
+
+
+    /* PROTECT HOME - If no token, return to login. Navigate has to be use in useEffect() */
+
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        if(!token){
+            navigate('/login');
+        }
+    },[])
+
+
 
     // Decode token to access the username and id, wont change so const is ok and NOT useState
     const decodedToken = jwtDecode(localStorage.getItem("token"))
     const myId = decodedToken.id
     const myUsername = decodedToken.username
+
+
 
 
 
@@ -98,12 +115,17 @@ function Home(){
         } catch (error) {
             console.log("Error when sending message" + error)
         }
-
     }
 
     // Function to format time to locale time 
     function formatTime(timestamp){
         return new Date(timestamp).toLocaleString()
+    }
+
+    // Function for logout client
+    function handleLogout(){
+        localStorage.clear()
+        navigate('/login')
     }
 
 
@@ -126,13 +148,17 @@ function Home(){
                 <button className='border-2 mb-10' onClick={handleSendMessage}>I am thinking of you</button>
             </div>
 
-            <div className='border-2 h-50 overflow-scroll' id='lastMessages'>
+            <div id='lastMessages' className='border-2 h-50 overflow-scroll' >
                 {recentMessages && recentMessages.map((item,index) => (
                     <div key={index}>
                         <p>{item.sender == myId ? "You":"Partner" } - {item.message_sent} at {formatTime(item.time_sent)}</p> 
                     </div>
                 ))}
                 <div ref={bottomRef}></div>
+            </div>
+
+            <div id='logoutButton' className='border-2'>
+                <button onClick={handleLogout} >Logout</button>
             </div>
 
         </div>
