@@ -137,30 +137,33 @@ function Home(){
 
 
 
+
+
+
     return (
+        <div className='flex flex-col h-screen bg-blue-200 items-center justify-center'>
+            <div className='flex flex-col h-screen items-center justify-center'>
+                <div id='header' className='flex flex-col text-7xl font-bold items-center' style={{fontFamily: 'Rouge Script'}}>
+                    <h1> Welcome {myUsername} </h1>
+                </div>
 
-        <div>
-            <div id='header'>
-                <h1> Welcome {myUsername} </h1>
+                <div id='content'>
+                    <button className='border-2 shadow-2xl bg-gray-50 rounded-2xl mb-10 p-5 mt-5 text-4xl font-bold ' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
+                </div>
+
+                <div id='lastMessages' className='border-2 h-100 overflow-hidden p-5' >
+                    {recentMessages && recentMessages.map((item,index) => (
+                        <div key={index}>
+                            <p>{item.sender == myId ? "You":"Partner" } - {item.message_sent} at {formatTime(item.time_sent)}</p> 
+                        </div>
+                    ))}
+                    <div ref={bottomRef}></div>
+                </div>
             </div>
 
-            <div id='content'>
-                <button className='border-2 mb-10' onClick={handleSendMessage}>I am thinking of you</button>
+            <div id='logoutButton' className='border-2 text-center mb-auto'>
+                    <button onClick={handleLogout} >Logout</button>
             </div>
-
-            <div id='lastMessages' className='border-2 h-50 overflow-scroll' >
-                {recentMessages && recentMessages.map((item,index) => (
-                    <div key={index}>
-                        <p>{item.sender == myId ? "You":"Partner" } - {item.message_sent} at {formatTime(item.time_sent)}</p> 
-                    </div>
-                ))}
-                <div ref={bottomRef}></div>
-            </div>
-
-            <div id='logoutButton' className='border-2'>
-                <button onClick={handleLogout} >Logout</button>
-            </div>
-
         </div>
     )
 }
