@@ -45,12 +45,14 @@ function Login(){
 
 
     return(
-        <div>
-            <h1>Hellooo</h1>
-            <input value={username} onChange={handleUsername} type="text" placeholder="Enter Username" />
-            <input value={password} onChange={handlePassword} type="password" placeholder="Enter Password" />
-            <button onClick={handleSubmit} >Submit</button>
-            <button onClick={handleRegister} >Register</button>
+        <div className="flex flex-col items-center h-screen justify-center bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/background-login.jpg')"}} >
+            <div className="flex flex-col border-2 bg-white p-5">
+                <h1 className="text-9xl">Thinkofu</h1>
+                <input value={username} onChange={handleUsername} type="text" placeholder="Enter Username" />
+                <input value={password} onChange={handlePassword} type="password" placeholder="Enter Password" />
+                <button onClick={handleSubmit} className="border-2 text-3xl mt-2">Submit</button>
+                <button onClick={handleRegister} className="border-2 text-3xl mt-2">Register</button>
+            </div>
         </div>
     )
 }
