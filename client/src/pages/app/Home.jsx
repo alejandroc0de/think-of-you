@@ -142,7 +142,7 @@ function Home(){
 
 
     return (
-        <div className='flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat' style={{backgroundImage: "url('/background-home.jpg')"}} >
+        <div className='flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat' >
             {/* HEADER */}
             <div id='header' className='flex flex-col text-7xl font-bold items-center h-[25%] justify-center' style={{fontFamily: 'Rouge Script'}}>
                 <h1> Welcome {myUsername} </h1>
