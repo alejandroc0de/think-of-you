@@ -141,10 +141,6 @@ function Home(){
 
 
 
-
-
-
-
     return (
         <div className='flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat' style={{backgroundImage: "url('/background-home.jpg')"}} >
             {/* HEADER */}
@@ -156,7 +152,7 @@ function Home(){
 
             <div className='flex flex-row h-[65%] w-screen justify-evenly '>
 
-                <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200  w-[35%] backdrop-blur-xs' >
+                <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200  w-[35%] backdrop-blur-xsz' >
                     {recentMessages && recentMessages.map((item,index) => (
                         <div className={item.sender == myId? 'text-right m-5':'text-left m-5'} key={index}>
                             <span className= {item.sender == myId ? "bg-blue-200 shadow-2xs border-2 border-gray-200  rounded-2xl p-1" : "bg-gray-200 border-2 border-gray-300 rounded-2xl p-1"}> {item.sender == myId ? "You" :"Partner" } - {item.message_sent} at {formatTime(item.time_sent)}</span> 
@@ -171,16 +167,12 @@ function Home(){
             </div>
 
             
-
             {/* FOOTER */}
 
             <div id='logoutButton' className=' h-[10%] flex flex-col justify-center'>
                 <button onClick={handleLogout} className='text-4xl font-bold hover:scale-110 hover:text-red-600 duration-200' style={{fontFamily: 'Rouge Script'}}>Logout</button>
             </div>
-
         </div>
-
-        
     )
 }
 
