@@ -46,6 +46,10 @@ function Register(){
         }
     }
 
+    function handleBack(){
+        navigate('/login')
+    }
+
     return(
 
 
@@ -56,7 +60,7 @@ function Register(){
             <input className="text-4xl p-5 m-5 border-b-2 border-gray-300 hover:scale-115 duration-200 focus:outline-0" value={username} onChange={handleUsername} type="text"placeholder="Create a username" />
             <input className="text-4xl p-5 m-5 border-b-2 border-gray-300 hover:scale-115 duration-200 focus:outline-0" value={password} onChange={handlePassword} type="password" placeholder="Create a password" />
             <button className="text-4xl p-5 m-5 font-bold hover:scale-115 duration-200" onClick={handleSubmit} >Submit</button>
-
+            <button className="text-4xl p-5 m-5 font-bold hover:scale-115 duration-200" onClick={handleBack}>Back to login </button>
         </div>
         
     )
