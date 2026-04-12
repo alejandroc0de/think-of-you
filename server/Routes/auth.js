@@ -33,12 +33,12 @@ router.post('/login', async(req,res) => {
             if (await bcrypt.compare(password , result.rows[0].password)){                      // Compare with password
                 // JWT!
                 var token = jwt.sign({"username":result.rows[0].username, "id":result.rows[0].id},process.env.SECRET_KEY,{expiresIn: '7d'})  // Add JWT and encrypt username and Id for middleware
-                res.status(202).json({token: token}) // I return the token once user is logged in 
+                res.status(200).json({token: token}) // I return the token once user is logged in 
             }else{
-                res.status(401).send("Wrong Credentials")
+                res.status(401).json({result :"Wrong Credentials"})
             }
         }else{
-            res.status(401).send("Wrong Credentials")
+            res.status(401).json({result :"Wrong Credentials"})
         }
     } catch (error) {
         res.status(400).send("Error when trying to login from server")

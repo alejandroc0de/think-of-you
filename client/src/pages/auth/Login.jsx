@@ -9,6 +9,7 @@ function Login(){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate() // Using this i can navigate to another route, a function cant render JSX
+    const [wrongCredentials, setWrongCredentials] = useState(false)
 
 
 
@@ -24,15 +25,26 @@ function Login(){
 
     // This functions handles the login, makes a req to the back, receives the token and redirects to /home
     async function handleSubmit(){
+        if(username == ""){
+            return
+        }
+
         try {
             const result = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`,{
                 method:"POST",
                 headers : {"Content-Type":"application/json"},
                 body : JSON.stringify({username : username, password : password})
             });
+            // I analize the result before using json() to avoid errors. 
+            if(!result.ok){
+                setWrongCredentials(true) // Conditional message
+                return
+            }
             const data = await result.json();
+            setWrongCredentials(false) 
             localStorage.setItem("token", data.token) // Save the token retorned by the back to the LocalStorage
             navigate('/home')
+
         } catch (error) {
             console.log("Error when trying to login" + error)
         }
@@ -52,6 +64,9 @@ function Login(){
                 <input value={password} onChange={handlePassword} type="password" placeholder="Enter Password" className="text-3xl p-3 border-b-2 border-gray-400 outline-none" />
                 <button onClick={handleSubmit} className=" border-b-2 border-gray-400 text-3xl font-bold mt-10 rounded-2xl text-gray-700 hover:scale-110 hover:text-black duration-200" >Submit</button>
                 <button onClick={handleRegister} className="border-b-2 border-gray-400 text-3xl font-bold mt-5 rounded-2xl text-gray-700 hover:scale-110 hover:text-black duration-200">Register</button>
+
+                <div>{wrongCredentials && <p className="text-red-600 text-2xl text-center mt-3.5"> Wrong Credentials </p>}</div>
+                
             </div>
         </div>
     )
