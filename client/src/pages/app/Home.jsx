@@ -13,6 +13,8 @@ function Home(){
     const [recentMessages, setRecentMessages] = useState([]) // Array of messages 
     const bottomRef = useRef(null) // Ref for the message div and auto scroll
     const navigate = useNavigate()
+    const [hasPartner, setHasPartner] = useState(false) // State for conditional rendering 
+    const [partnerUsername, setPartnerUsername] = useState("")
 
     // ----------------------------------------------------------------
 
@@ -117,6 +119,22 @@ function Home(){
         }
     }
 
+    function handlePartnerUsername(event){
+        setPartnerUsername(event.target.value)
+    }
+
+    // Function to save partner Username to backend
+    async function handlePartnerUsername(){
+        try{
+            const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`)
+        }catch(error){
+
+        }
+    }
+
+
+
+
     // Function to format time to locale time 
     function formatTime(timestamp){
         return new Date(timestamp).toLocaleString([],{
@@ -134,11 +152,7 @@ function Home(){
     }
 
 
-    // TODO
-    // Gotta handle the amount of messages printed,
-    // Logout
-    // Gotta improve the confirmation messages 
-
+    // ----------------------------------------------------------------------------------------------------------
 
 
     return (
@@ -148,9 +162,9 @@ function Home(){
                 <h1> Welcome {myUsername} </h1>
             </div>
 
-            {/* CONTENT */}
+            {/* CONTENT HAS PARTNER */}
 
-            <div className='flex flex-row h-[65%] w-screen justify-evenly '>
+            {hasPartner && <div className='flex flex-row h-[65%] w-screen justify-evenly '>
 
                 <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200  w-[35%] backdrop-blur-xsz' >
                     {recentMessages && recentMessages.map((item,index) => (
@@ -165,6 +179,21 @@ function Home(){
                     <button className='border-2 shadow-2xl bg-gray-50 rounded-2xl mb-10 p-5 mt-5 text-4xl font-bold hover:bg-pink-200 hover:scale-125 duration-300' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
                 </div>
             </div>
+            }
+
+            {/* CONTENT HAS NOT PARTNER */}
+            {!hasPartner &&    
+                <div>
+                    <div className=' flex flex-col text-5xl font-bold leading-normal' style={{fontFamily: 'Rouge Script'}}>
+                        <p>You dont have a partner, to use the app please first link your partner</p>
+                        <label htmlFor="">Partner username: </label>
+                        <input value={partnerUsername} onChange={setPartnerUsername} type="text" placeholder='Enter Username'/>
+                        <button onClick={handlePartnerUsername}>Submit</button>
+                    </div> 
+                </div>
+            }
+
+                
 
             
             {/* FOOTER */}
