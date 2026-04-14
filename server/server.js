@@ -29,6 +29,8 @@ app.use(cors({ origin: process.env.CLIENT_URL}))
 const authRoutes = require('./Routes/auth')
 app.use('/auth', authRoutes) // As a middleware it send all routes that have the word auth to the authRoutes we imported
 
+const partnerRoute = require('./Routes/partnerships')
+app.use('/partnerships', partnerRoute) // Any route with "partnerships" goes to that file
 
 const messageRoute = require('./Routes/messages')(ioServer,connectedUsers) // This return the function in the path, we pass IO as args,and then we use that function when a message hits
 app.use('/messages', messageRoute)

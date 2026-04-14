@@ -3,3 +3,6 @@ and only do a get each time i reload the page
 
 # When client connects to home we get the last messages from the db using a useEffect, since a client can 
 only have one partner bruh, we use that as the where clause on the query, the sender info comes from the token via middleware 
+
+# When i add a new js file with routes,i need to add it to the server, cause thats what the router does, it removes responsability
+from server, but i have to tell server to use that route when it matches the word

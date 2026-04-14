@@ -124,9 +124,13 @@ function Home(){
     }
 
     // Function to save partner Username to backend
-    async function handlePartnerUsername(){
+    async function submitPartnerUsername(){
         try{
-            const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`)
+            const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`,{
+                method: "GET",
+                headers : {Authorization : `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type' : "application/json"}
+            })
         }catch(error){
 
         }
@@ -187,8 +191,8 @@ function Home(){
                     <div className=' flex flex-col text-5xl font-bold leading-normal' style={{fontFamily: 'Rouge Script'}}>
                         <p>You dont have a partner, to use the app please first link your partner</p>
                         <label htmlFor="">Partner username: </label>
-                        <input value={partnerUsername} onChange={setPartnerUsername} type="text" placeholder='Enter Username'/>
-                        <button onClick={handlePartnerUsername}>Submit</button>
+                        <input value={partnerUsername} onChange={handlePartnerUsername} type="text" placeholder='Enter Username'/>
+                        <button onClick={submitPartnerUsername}>Submit</button>
                     </div> 
                 </div>
             }
