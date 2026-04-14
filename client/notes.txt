@@ -29,3 +29,8 @@ sounds ok, but i will give it some more thought, the main idea is to emit to bot
 
 ## PROTECTED ROUTE, so i created a new folder Component, it has the protected route of home, i call it before rendering home as a route, it acts as a middleware, calls the function 
 envolving and within that function if there is not a token i call login, otherwise i return the children which is the same home
+
+# When using a useEffect with a function inside, dont forget to call the function within the useEffect
+
+# For the partner, i use conditional rendering, so on mounting i call the back and check if client has partner, if he does, process continues normally, and if client has no partner 
+i use conditional rendering

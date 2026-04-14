@@ -60,9 +60,26 @@ function Home(){
     },[]); // Empty dependecy array, so when mounted 
 
 
+    // Function to get partner info on mounting, checks if client has partner and if client has partner conditional render
+    useEffect(() => {
+        async function getPartnerInfo(){
+            try{
+                const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`,{
+                    method: "GET",
+                    headers : {Authorization : `Bearer ${localStorage.getItem('token')}`,
+                                'Content-Type' : "application/json"}
+                    })
+                if(result.ok){
+                    setHasPartner(true)
+                }
+            }catch(error){
+            }
+        };
+        getPartnerInfo() 
+    },[])
+
 
     /* Load the messages from the db once client logs in ----------------------------- */ 
-
     useEffect(() => {
         async function fetchData(){
             try {
@@ -83,15 +100,12 @@ function Home(){
 
     
     /* UseEffect for scroll to latest message once messages gets changed ------------- */
-
     useEffect(() => {
         if(bottomRef.current){
             bottomRef.current.scrollIntoView({behavior : "smooth", block : "end"})
         }
         // If there is a ref scroll to the latest message
     },[recentMessages])
-
-
  
 
 
@@ -123,18 +137,11 @@ function Home(){
         setPartnerUsername(event.target.value)
     }
 
-    // Function to save partner Username to backend
-    async function submitPartnerUsername(){
-        try{
-            const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`,{
-                method: "GET",
-                headers : {Authorization : `Bearer ${localStorage.getItem('token')}`,
-                            'Content-Type' : "application/json"}
-            })
-        }catch(error){
+    // This functions sets the partner to the db and conditional render
+    function handleSetPartner(){
 
-        }
     }
+    
 
 
 
@@ -192,7 +199,7 @@ function Home(){
                         <p>You dont have a partner, to use the app please first link your partner</p>
                         <label htmlFor="">Partner username: </label>
                         <input value={partnerUsername} onChange={handlePartnerUsername} type="text" placeholder='Enter Username'/>
-                        <button onClick={submitPartnerUsername}>Submit</button>
+                        <button onClick={handleSetPartner}>Submit</button>
                     </div> 
                 </div>
             }
