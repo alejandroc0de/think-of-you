@@ -57,8 +57,8 @@ function Login(){
 
 
     return(
-        <div className="flex flex-col items-center h-screen justify-center bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/background-login.jpg')", fontFamily:"Gabriela"}} >
-            <div className="flex flex-col border-2  p-10 rounded-2xl border-gray-300 shadow-2xl backdrop-blur-md backdrop-contrast-100">
+        <div className="flex flex-col items-center bg-amber-50 h-screen justify-center bg-cover bg-center bg-no-repeat" style={{fontFamily:"Gabriela"}} >
+            <div className="flex flex-col border-2  p-10 rounded-2xl border-gray-300 shadow-2xl backdrop-blur-md backdrop-contrast-500">
                 <h1 className="text-9xl font-bold">thinkofu</h1>
                 <input value={username} onChange={handleUsername} type="text" placeholder="Enter Username"  className="text-3xl mt-4 p-3 border-b-2 border-gray-400 outline-none"/>
                 <input value={password} onChange={handlePassword} type="password" placeholder="Enter Password" className="text-3xl p-3 border-b-2 border-gray-400 outline-none" />

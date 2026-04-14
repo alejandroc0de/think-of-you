@@ -189,13 +189,18 @@ function Home(){
     }
 
 
+
+
+    // TODO: 
+    // Insert partner name 
+
     // ----------------------------------------------------------------------------------------------------------
 
 
     return (
-        <div className='flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat' >
+        <div className='flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat bg-amber-50' >
             {/* HEADER */}
-            <div id='header' className='flex flex-col text-7xl font-bold items-center h-[25%] justify-center' style={{fontFamily: 'Rouge Script'}}>
+            <div id='header' className='flex flex-col text-6xl font-bold items-center h-[25%] justify-center' style={{fontFamily: 'Rouge Script'}}>
                 <h1> Welcome {myUsername} </h1>
             </div>
 
@@ -203,17 +208,18 @@ function Home(){
 
             {hasPartner && <div className='flex flex-row h-[65%] w-screen justify-evenly '>
 
-                <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200  w-[35%] backdrop-blur-xsz' >
+                <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200  w-[35%] backdrop-blur-xsz shadow-md bg-amber-50' >
                     {recentMessages && recentMessages.map((item,index) => (
-                        <div className={item.sender == myId? 'text-right m-5':'text-left m-5'} key={index}>
-                            <span className= {item.sender == myId ? "bg-blue-200 shadow-2xs border-2 border-gray-200  rounded-2xl p-1" : "bg-gray-200 border-2 border-gray-300 rounded-2xl p-1"}> {item.sender == myId ? "You" :"Partner" } - {item.message_sent} at {formatTime(item.time_sent)}</span> 
+                        <div className={item.sender == myId? 'text-right m-2 flex flex-col':'text-left m-2 flex flex-col '} key={index}>
+                            <p className= {item.sender == myId ? "bg-stone-200 shadow-2xs border-2 border-gray-200  rounded-2xl p-1 w-fit ml-auto" : "bg-white border-2 border-gray-300 rounded-2xl p-1 w-fit"}>{item.message_sent}</p> 
+                            <p className=' "border-2 text-gray-600 rounded-full p-1 text-xs'>{formatTime(item.time_sent)}</p>
                         </div>
                     ))}
                     <div ref={bottomRef}></div>
                 </div>
 
                 <div id='content' className=' flex flex-col justify-center '>
-                    <button className='border-2 shadow-2xl bg-gray-50 rounded-2xl mb-10 p-5 mt-5 text-4xl font-bold hover:bg-pink-200 hover:scale-125 duration-300' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
+                    <button className='border-2 shadow-md py-4 px-8 bg-stone-800 rounded-full mb-10 p-5 mt-5 text-4xl text-white font-bold  hover:bg-stone-600 transition-colors ' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
                 </div>
             </div>
             }
