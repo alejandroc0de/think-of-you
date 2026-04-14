@@ -14,7 +14,10 @@ function Home(){
     const bottomRef = useRef(null) // Ref for the message div and auto scroll
     const navigate = useNavigate()
     const [hasPartner, setHasPartner] = useState(false) // State for conditional rendering 
+    const [alreadyHasPartner, setAlreadyHasPartner] = useState(false) // Conditional for partner with another partner already, dont cry
+    const [partnerExists, setPartnerExists] = useState(true) // Conditional for incorrect username 
     const [partnerUsername, setPartnerUsername] = useState("")
+
 
     // ----------------------------------------------------------------
 
@@ -73,6 +76,7 @@ function Home(){
                     setHasPartner(true)
                 }
             }catch(error){
+                console.log(error)
             }
         };
         getPartnerInfo() 
@@ -138,10 +142,29 @@ function Home(){
     }
 
     // This functions sets the partner to the db and conditional render
-    function handleSetPartner(){
-
+    async function handleSetPartner(){
+        try {
+            const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`, {
+                method: "POST",
+                headers: {'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+                                'Content-Type' : "application/json"},
+                body: JSON.stringify({username : partnerUsername})
+            })
+            const data = await result.json()
+            if(data.error == "23505"){ // If username already has a partner
+                setAlreadyHasPartner(true)
+            }
+            if(data.error == "007"){ // If username doesnt exists on the db 
+                setPartnerExists(false)
+            }
+            if(result.ok){
+                window.alert("Partner linked!")
+               setHasPartner(true)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
-    
 
 
 
@@ -200,6 +223,8 @@ function Home(){
                         <label htmlFor="">Partner username: </label>
                         <input value={partnerUsername} onChange={handlePartnerUsername} type="text" placeholder='Enter Username'/>
                         <button onClick={handleSetPartner}>Submit</button>
+                        {alreadyHasPartner && <p className='text-5xl text-red-600 font-bold leading-normal text-center'>This user already has a partner </p>}
+                        {!partnerExists && <p className='text-5xl text-red-600 font-bold leading-normal text-center'> This username is not on thinkingofyou </p>}
                     </div> 
                 </div>
             }

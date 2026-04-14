@@ -34,3 +34,5 @@ envolving and within that function if there is not a token i call login, otherwi
 
 # For the partner, i use conditional rendering, so on mounting i call the back and check if client has partner, if he does, process continues normally, and if client has no partner 
 i use conditional rendering
+
+# If partner links, it will work for both partners, without verification for now

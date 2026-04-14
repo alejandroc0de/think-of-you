@@ -20,6 +20,34 @@ router.get('/', verifyToken, async(req,res) => {
     }
 })
 
+    router.post('/', verifyToken, async(req,res) => {
+        const client = req.user.id
+        const usernamePartner = req.body.username
+        try {
+            const result = await pool.query("SELECT * FROM users WHERE username = $1 ",[usernamePartner])
+            if(result.rowCount == 0){
+                res.status(404).json({message: "Username is not in thinkingofyou", error: "007"}) // Error to render a conditional message on front
+            }else{
+                const partner_id = result.rows[0].id
+                if(partner_id == client){
+                    res.status(404).json({message: "You cannot match with yourself lol"}) // If client tries to match with itself
+                    return
+                }
+                try {
+                    const result2 = await pool.query("INSERT INTO partnerships (user1_id, user2_id) VALUES ($1, $2)",[client, partner_id])
+                    res.status(200).json({message: "Partnership updated succesfully"})
+                } catch (error) {
+                    if(error.code == "23505"){
+                        res.status(400).json({message: "Partner already has partner", error: error.code})
+                        return
+                    }
+                    res.status(400).json({message: "Error when creating partnership", error: error})
+                }
+            }
+        } catch (error) {
+            res.status(400).json({message: "Error when saving partner to database"})
+        }
+    })
 
 
 
