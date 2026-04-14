@@ -193,6 +193,11 @@ function Home(){
 
     // TODO: 
     // Insert partner name 
+    // NAV BAR WITH SPOTIFY PLAYLIST 
+    // lowercase all usernames 
+    // Notifications on chrome?
+    // About us nav page 
+    // Spotify link to playlist
 
     // ----------------------------------------------------------------------------------------------------------
 
