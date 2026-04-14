@@ -143,6 +143,9 @@ function Home(){
 
     // This functions sets the partner to the db and conditional render
     async function handleSetPartner(){
+        if(partnerUsername == ""){
+            return // If empty username
+        }
         try {
             const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`, {
                 method: "POST",
