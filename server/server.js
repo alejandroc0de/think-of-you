@@ -4,6 +4,7 @@ const http = require('http')
 const {Server} = require('socket.io') // So http for createServer, that server receives app as the route handler. Socket.io allows bidirectional comms, without making lots of reqs
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
+const PORT = process.env.PORT || 3000
 
 const connectedUsers = {} // Json obj to save connected users, this is in server memory 
 
@@ -60,6 +61,6 @@ ioServer.on("connection", (socket) => {
 })
 
 
-server.listen(3000, () => {
-    console.log("Server running in localhost")
+server.listen(PORT, () => {
+    console.log(`Server running in ${PORT}`)
 })
