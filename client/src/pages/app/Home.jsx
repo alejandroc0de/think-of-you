@@ -17,6 +17,7 @@ function Home(){
     const [alreadyHasPartner, setAlreadyHasPartner] = useState(false) // Conditional for partner with another partner already, dont cry
     const [partnerExists, setPartnerExists] = useState(true) // Conditional for incorrect username 
     const [partnerUsername, setPartnerUsername] = useState("")
+    const [partnerName, setPartnerName] = useState("")
 
 
     // ----------------------------------------------------------------
@@ -94,6 +95,7 @@ function Home(){
                 })
                 const data = await result.json()
                 setRecentMessages(data.recentMessages.reverse()) // Returned by backend in the res json 
+                setPartnerName(data.partnerName) // From the db i returned the partner name
             } catch (error) {
                 console.log("Error fetching last messages " + error)
             }
@@ -207,6 +209,7 @@ function Home(){
             {/* HEADER */}
             <div id='header' className='flex flex-col text-6xl font-bold items-center h-[25%] justify-center' style={{fontFamily: 'Rouge Script'}}>
                 <h1> Welcome {myUsername} </h1>
+                <h5 className='text-4xl'>Partner : {partnerName} </h5>
             </div>
 
             {/* CONTENT HAS PARTNER */}

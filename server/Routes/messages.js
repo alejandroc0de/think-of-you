@@ -69,7 +69,24 @@ module.exports = (io, connectedUsers) => {
         try {
             const result = await pool.query("SELECT * FROM messages WHERE sender = $1 OR receiver = $1 ORDER BY time_sent DESC LIMIT 20",
                                             [sender])
-            res.status(200).json({recentMessages: result.rows, message: "Messages fetched properly"})
+            let partner
+            let partnerName
+            if (result.rowCount>0){
+                if(result.rows[0].sender == sender){
+                    partner = result.rows[0].receiver
+                }else{
+                    partner = result.rows[0].sender
+                }
+                try {
+                    // I do this extra call to get the partner name and be able to use it in the frontend
+                    const result2 = await pool.query("SELECT * FROM users WHERE id = $1",[partner])
+                    partnerName = result2.rows[0].name
+                } catch (error) {
+                    res.status(500).json({message: "Error fetching partner name", error : error})
+                    console.log(error)
+                }
+            }    
+            res.status(200).json({recentMessages: result.rows, message: "Messages fetched properly", partnerName : partnerName})
         } catch (error) {
             res.status(500).json({message: "Error fetching last messages", error : error})
         }
