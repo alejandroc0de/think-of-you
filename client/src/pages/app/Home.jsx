@@ -18,6 +18,7 @@ function Home(){
     const [partnerExists, setPartnerExists] = useState(true) // Conditional for incorrect username 
     const [partnerUsername, setPartnerUsername] = useState("")
     const [partnerName, setPartnerName] = useState("")
+    const [loading, setLoading] = useState(true) // To avoid the loading screen defaulting to no partner 
 
 
     // ----------------------------------------------------------------
@@ -78,9 +79,11 @@ function Home(){
                 }
             }catch(error){
                 console.log(error)
+            }finally{
+                setLoading(false) 
             }
         };
-        getPartnerInfo() 
+        getPartnerInfo()
     },[])
 
 
@@ -212,39 +215,44 @@ function Home(){
                 <h5 className='text-4xl'>Partner : {partnerName} </h5>
             </div>
 
-            {/* CONTENT HAS PARTNER */}
+            {loading ? (<div className="w-12 h-12 border-4 border-stone-300 border-t-stone-800 rounded-full animate-spin"></div>) : 
+            (
+                <>
+                {/* CONTENT HAS PARTNER */}
 
-            {hasPartner && <div className='flex flex-row h-[65%] w-screen justify-evenly '>
+                {hasPartner && <div className='flex flex-row h-[65%] w-screen justify-evenly '>
 
-                <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200  w-[35%] backdrop-blur-xsz shadow-md bg-amber-50' >
-                    {recentMessages && recentMessages.map((item,index) => (
-                        <div className={item.sender == myId? 'text-right m-2 flex flex-col':'text-left m-2 flex flex-col '} key={index}>
-                            <p className= {item.sender == myId ? "bg-stone-200 shadow-2xs border-2 border-gray-200  rounded-2xl p-1 w-fit ml-auto" : "bg-white border-2 border-gray-300 rounded-2xl p-1 w-fit"}>{item.message_sent}</p> 
-                            <p className=' "border-2 text-gray-600 rounded-full p-1 text-xs'>{formatTime(item.time_sent)}</p>
-                        </div>
-                    ))}
-                    <div ref={bottomRef}></div>
+                    <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200  w-[35%] backdrop-blur-xsz shadow-md bg-amber-50' >
+                        {recentMessages && recentMessages.map((item,index) => (
+                            <div className={item.sender == myId? 'text-right m-2 flex flex-col':'text-left m-2 flex flex-col '} key={index}>
+                                <p className= {item.sender == myId ? "bg-stone-200 shadow-2xs border-2 border-gray-200  rounded-2xl p-1 w-fit ml-auto" : "bg-white border-2 border-gray-300 rounded-2xl p-1 w-fit"}>{item.message_sent}</p> 
+                                <p className=' "border-2 text-gray-600 rounded-full p-1 text-xs'>{formatTime(item.time_sent)}</p>
+                            </div>
+                        ))}
+                        <div ref={bottomRef}></div>
+                    </div>
+
+                    <div id='content' className=' flex flex-col justify-center '>
+                        <button className='border-2 shadow-md py-4 px-8 bg-stone-800 rounded-full mb-10 p-5 mt-5 text-4xl text-white font-bold  hover:bg-stone-600 transition-colors ' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
+                    </div>
                 </div>
+                }
 
-                <div id='content' className=' flex flex-col justify-center '>
-                    <button className='border-2 shadow-md py-4 px-8 bg-stone-800 rounded-full mb-10 p-5 mt-5 text-4xl text-white font-bold  hover:bg-stone-600 transition-colors ' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
-                </div>
-            </div>
-            }
-
-            {/* CONTENT HAS NOT PARTNER */}
-            {!hasPartner &&    
-                <div>
-                    <div className=' flex flex-col text-5xl font-bold leading-normal' style={{fontFamily: 'Rouge Script'}}>
-                        <p>You dont have a partner, to use the app please first link your partner</p>
-                        <label htmlFor="">Partner username: </label>
-                        <input value={partnerUsername} onChange={handlePartnerUsername} type="text" placeholder='Enter Username'/>
-                        <button onClick={handleSetPartner}>Submit</button>
-                        {alreadyHasPartner && <p className='text-5xl text-red-600 font-bold leading-normal text-center'>This user already has a partner </p>}
-                        {!partnerExists && <p className='text-5xl text-red-600 font-bold leading-normal text-center'> This username is not on thinkingofyou </p>}
-                    </div> 
-                </div>
-            }
+                {/* CONTENT HAS NOT PARTNER */}
+                {!hasPartner &&    
+                    <div>
+                        <div className=' flex flex-col text-5xl font-bold leading-normal' style={{fontFamily: 'Rouge Script'}}>
+                            <p>You dont have a partner, to use the app please first link your partner</p>
+                            <label htmlFor="">Partner username: </label>
+                            <input value={partnerUsername} onChange={handlePartnerUsername} type="text" placeholder='Enter Username'/>
+                            <button onClick={handleSetPartner}>Submit</button>
+                            {alreadyHasPartner && <p className='text-5xl text-red-600 font-bold leading-normal text-center'>This user already has a partner </p>}
+                            {!partnerExists && <p className='text-5xl text-red-600 font-bold leading-normal text-center'> This username is not on thinkingofyou </p>}
+                        </div> 
+                    </div>
+                }
+                </>
+            )}
 
                 
 
