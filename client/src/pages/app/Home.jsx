@@ -208,23 +208,23 @@ function Home(){
 
 
     return (
-        <div className='flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat bg-amber-50' >
+        <div className='md:flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat bg-amber-50' >
             {/* HEADER */}
-            <div id='header' className='flex flex-col text-6xl font-bold items-center h-[25%] justify-center' style={{fontFamily: 'Rouge Script'}}>
+            <div id='header' className='flex flex-col font-bold items-center  justify-center text-4xl h-[15%] md:text-6xl md:h-[25%]' style={{fontFamily: 'Rouge Script'}}>
                 <h1> Welcome {myUsername} </h1>
                 <h5 className='text-4xl'>Partner : {partnerName} </h5>
             </div>
 
-            {loading ? (<div className="w-12 h-12 border-4 border-stone-300 border-t-stone-800 rounded-full animate-spin"></div>) : 
+            {loading ? (<div className="border-4 border-stone-300 border-t-stone-800 rounded-full animate-spin w-10 h-10 md:w-12 md:h-12 "></div>) : 
             (
                 <>
                 {/* CONTENT HAS PARTNER */}
 
-                {hasPartner && <div className='flex flex-row h-[65%] w-screen justify-evenly '>
+                {hasPartner && <div className='flex w-screen justify-evenly flex-col h-[75%] md:flex-row md:h-[65%] '>
 
-                    <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200  w-[35%] backdrop-blur-xsz shadow-md bg-amber-50' >
+                    <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200 backdrop-blur-xsz shadow-md bg-amber-50 w-[full] md:w-[35%]' >
                         {recentMessages && recentMessages.map((item,index) => (
-                            <div className={item.sender == myId? 'text-right m-2 flex flex-col':'text-left m-2 flex flex-col '} key={index}>
+                            <div className={item.sender == myId? 'text-right flex flex-col md:m-2 ':'text-left  flex flex-col md:m-2 '} key={index}>
                                 <p className= {item.sender == myId ? "bg-stone-200 shadow-2xs border-2 border-gray-200  rounded-2xl p-1 w-fit ml-auto" : "bg-white border-2 border-gray-300 rounded-2xl p-1 w-fit"}>{item.message_sent}</p> 
                                 <p className=' "border-2 text-gray-600 rounded-full p-1 text-xs'>{formatTime(item.time_sent)}</p>
                             </div>
@@ -233,7 +233,7 @@ function Home(){
                     </div>
 
                     <div id='content' className=' flex flex-col justify-center '>
-                        <button className='border-2 shadow-md py-4 px-8 bg-stone-800 rounded-full mb-10 p-5 mt-5 text-4xl text-white font-bold  hover:bg-stone-600 transition-colors ' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
+                        <button className='border-2 shadow-md py-4 px-8 bg-stone-800 rounded-full  p-5  text-white font-bold text-3xl m-3 mb-1 md:text-4xl md:mt-5 md:mb-10 hover:bg-stone-600 transition-colors ' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
                     </div>
                 </div>
                 }
@@ -260,7 +260,7 @@ function Home(){
             {/* FOOTER */}
 
             <div id='logoutButton' className=' h-[10%] flex flex-col justify-center'>
-                <button onClick={handleLogout} className='text-4xl font-bold hover:scale-110 hover:text-red-600 duration-200' style={{fontFamily: 'Rouge Script'}}>Logout</button>
+                <button onClick={handleLogout} className=' font-bold hover:scale-110 text-3xl md:text-4xl hover:text-red-600 duration-200' style={{fontFamily: 'Rouge Script'}}>Logout</button>
             </div>
         </div>
     )
