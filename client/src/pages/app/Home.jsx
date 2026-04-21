@@ -241,7 +241,7 @@ function Home(){
                 {/* CONTENT HAS NOT PARTNER */}
                 {!hasPartner &&    
                     <div>
-                        <div className=' flex flex-col text-5xl font-bold leading-normal' style={{fontFamily: 'Rouge Script'}}>
+                        <div className=' flex flex-col text-3xl font-bold leading-normal m-[5%] w-[90%] md:text-5xl md:m-auto  ' style={{fontFamily: 'Rouge Script'}}>
                             <p>You dont have a partner, to use the app please first link your partner</p>
                             <label htmlFor="">Partner username: </label>
                             <input value={partnerUsername} onChange={handlePartnerUsername} type="text" placeholder='Enter Username'/>
