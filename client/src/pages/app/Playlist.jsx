@@ -3,6 +3,7 @@ function Playlist(){
 
 
 
+
     return(
         <>  
             <div className="flex flex-col text-center bg-black h-full overflow-hidden" style={{fontFamily: 'Gabriela'}}>
@@ -19,5 +20,14 @@ function Playlist(){
             </div>
         </>
     )
+ 
+    
+    /* IN CASE OF APPLE MUSIC 
+                    <iframe allow="autoplay *; encrypted-media *;" 
+                        className="w-[50%] h-[600px] p-2 background:black" 
+                        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" 
+                        src="https://embed.music.apple.com/co/playlist/dope/pl.u-pMylgaETWoYv021?l=en">
+                    </iframe>
+     */
 }
 export default Playlist;
