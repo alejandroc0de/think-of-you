@@ -5,16 +5,17 @@ function Playlist(){
 
     return(
         <>  
-            <div className="flex flex-col text-center bg-gray-700" style={{fontFamily: 'Rouge Script'}}>
-                <h1 className="text-5xl p-10">The Playlist</h1>
-                <iframe
-                    src="https://open.spotify.com/embed/playlist/0Vt2EFdXPAtQiEv3vqpWzt?utm_source=generator&theme=0"
-                    width="100%"
-                    height="800px"
-                    frameBorder="0"
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"
+            <div className="flex flex-col text-center bg-black h-full overflow-hidden" style={{fontFamily: 'Gabriela'}}>
+                <h1 className="text-6xl font-extrabold text-white p-10">The Playlist</h1>
+                <div className=" overflow-hidden">
+                    <iframe 
+                        src="https://open.spotify.com/embed/playlist/2oWTWIPDY5IxtsRh3RPJZz?utm_source=generator&theme=0"
+                        className ="w-full h-[600px] md:h-[800px] p-2"
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
                     ></iframe>
+                </div>
+
             </div>
         </>
     )
