@@ -13,7 +13,7 @@ function App() {
 
 
   return(
-    <div>
+    <div className='flex flex-col h-screen overflow-hidden'>
       <BrowserRouter>
       <Navbar/>
         <Routes>
@@ -23,7 +23,6 @@ function App() {
           <Route element = {<ProtectedRoute />}>
             <Route path='/home' element={<Home />}/>
           </Route>
-
           <Route path='/register' element = {<Register />} />
           <Route path='/playlist' element = {<Playlist />} />
         </Routes>

@@ -12,7 +12,7 @@ function Navbar(){
 
   return (
     <>
-        <div className='flex flex-row justify-around text-2xl bg-amber-50 p-1' style={{fontFamily: 'Gabriela'}}>
+        <div className='flex flex-row justify-around text-auto bg-amber-50 p-1 md:text-2xl' style={{fontFamily: 'Gabriela'}}>
             <Link className='hover:scale-110 duration-200' to={"/login"}>Thinkofyou</Link>
             <Link className='hover:scale-110 duration-200' > About Us</Link>
             <Link className='hover:scale-110 duration-200' to={"/playlist"}>The Playlist</Link>
