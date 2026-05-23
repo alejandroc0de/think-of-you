@@ -3,6 +3,8 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import Home from './pages/app/Home'
 import ProtectedRoute from './pages/component/ProtectedRoute';
+import Navbar from './components/Navbar';
+import Playlist from './pages/app/Playlist';
 
 
 function App() {
@@ -11,8 +13,9 @@ function App() {
 
 
   return(
-    <div>
+    <div className='flex flex-col h-screen overflow-hidde++'>
       <BrowserRouter>
+      <Navbar/>
         <Routes>
           <Route path='/' element = {<Navigate to= "/login"/>}/>
           <Route path='/login' element = {<Login />} /> 
@@ -20,8 +23,8 @@ function App() {
           <Route element = {<ProtectedRoute />}>
             <Route path='/home' element={<Home />}/>
           </Route>
-
           <Route path='/register' element = {<Register />} />
+          <Route path='/playlist' element = {<Playlist />} />
         </Routes>
       
       

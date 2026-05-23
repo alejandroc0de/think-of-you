@@ -60,7 +60,7 @@ function Login(){
         <div className="flex flex-col items-center bg-amber-50 h-screen justify-center bg-cover bg-center bg-no-repeat" style={{fontFamily:"Gabriela"}} >
             <div className="flex flex-col border-2  rounded-2xl border-gray-300 shadow-2xl backdrop-blur-md backdrop-contrast-500 p-3 w-[90%] md:w-auto md:p-10">
                 <h1 className=" font-bold text-6xl text-center md:text-8xl">thinkofu</h1>
-                <input value={username} onChange={handleUsername} type="text" placeholder="Enter Username"  className="mt-4 p-3 border-b-2 border-gray-400 outline-none text-2xl text-3xl "/>
+                <input value={username} onChange={handleUsername} type="text" placeholder="Enter Username"  className="mt-4 p-3 border-b-2 border-gray-400 outline-none text-3xl "/>
                 <input value={password} onChange={handlePassword} type="password" placeholder="Enter Password" className="text-3xl p-3 border-b-2 border-gray-400 outline-none" />
                 <button onClick={handleSubmit} className=" border-b-2 border-gray-400 text-3xl font-bold mt-10 rounded-2xl text-gray-700 hover:scale-110 hover:text-black duration-200" >Submit</button>
                 <button onClick={handleRegister} className="border-b-2 border-gray-400 text-3xl font-bold mt-5 rounded-2xl text-gray-700 hover:scale-110 hover:text-black duration-200">Register</button>
