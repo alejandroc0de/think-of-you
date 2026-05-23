@@ -1,9 +1,8 @@
 // Route to post the messages sent from the client
-
 const express = require ('express')
 const router = express.Router()
-const pool = require('../db') // Imported from db file to make the queries
 const verifyToken = require('../middleware/auth')
+const {getMessages, getPartnerName, getPartnerSender,insertMessage} = require('../services/messageService.js')
 
 
 
@@ -23,14 +22,13 @@ module.exports = (io, connectedUsers) => {
 
         // Try to find the partner of the sender
         try {
-            const result = await pool.query("SELECT * FROM partnerships WHERE user1_id = $1 OR user2_id = $1",[sender])
-
+            const result = await getPartnerSender(sender) // This is a call to SERVICES
             // Checking if sender has no partner, if he doesnt, rowcount is 0  RETURN
             if(result.rowCount === 0){
                 res.status(404).json({message : "Sender does not have a partnet yet"})
                 return
             }
-
+            
             // Here we setup the info about who is sender and who is receiver
             if(result.rows[0].user1_id == sender ){ 
                 // receiver is user2
@@ -48,8 +46,8 @@ module.exports = (io, connectedUsers) => {
         // Now i send the message to the table messages 
 
         try {
-            const insertResult = await pool.query("INSERT INTO messages (sender, receiver, message_sent) VALUES ($1,$2,$3) RETURNING *", // Returning to access what was entered
-                                                [sender, receiver,message])
+
+            const insertResult = await insertMessage(sender,receiver,message) // Call to SERVICES
             res.status(201).json({message : "Message saved properly", messageObj : insertResult}) // Rerturning entered
             // Realtime Update using SOCKET IO
             if(connectedUsers[receiver]){
@@ -67,8 +65,7 @@ module.exports = (io, connectedUsers) => {
     router.get('/',verifyToken, async(req, res) => {
         const sender = req.user.id // via middleware id for sender
         try {
-            const result = await pool.query("SELECT * FROM messages WHERE sender = $1 OR receiver = $1 ORDER BY time_sent DESC LIMIT 20",
-                                            [sender])
+            const result = await getMessages(sender)
             let partner
             let partnerName
             if (result.rowCount>0){
@@ -79,7 +76,7 @@ module.exports = (io, connectedUsers) => {
                 }
                 try {
                     // I do this extra call to get the partner name and be able to use it in the frontend
-                    const result2 = await pool.query("SELECT * FROM users WHERE id = $1",[partner])
+                    const result2 = await getPartnerName(partner)
                     partnerName = result2.rows[0].name
                 } catch (error) {
                     res.status(500).json({message: "Error fetching partner name", error : error})
