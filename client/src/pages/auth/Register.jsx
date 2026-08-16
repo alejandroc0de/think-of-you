@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { registerService } from "../../services/authService.js"
 
 function Register(){
 
@@ -25,11 +26,7 @@ function Register(){
 
     async function handleSubmit(){
         try {
-            const result = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`,{
-                method:"POST",
-                headers : {"Content-Type":"application/json"},
-                body : JSON.stringify({name : name, username: username, password: password})
-            });
+            const result = await registerService(name,username,password)
             if(!result.ok){
                 const data = await result.json()
                 if(data.error === "23505"){ // code for unique clause violation 

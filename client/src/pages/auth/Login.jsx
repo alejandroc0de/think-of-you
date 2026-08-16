@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Navigate, Routes, Route, useNavigate } from "react-router-dom"
 import Register from './Register'
+import { loginService } from "../../services/authService.js"
 
 
 
@@ -30,11 +31,7 @@ function Login(){
         }
 
         try {
-            const result = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`,{
-                method:"POST",
-                headers : {"Content-Type":"application/json"},
-                body : JSON.stringify({username : username, password : password})
-            });
+            const result = await loginService(username,password) // This is a call to services to communicate with backend. Clean Arch 
             // I analize the result before using json() to avoid errors. 
             if(!result.ok){
                 setWrongCredentials(true) // Conditional message
@@ -44,7 +41,7 @@ function Login(){
             setWrongCredentials(false) 
             localStorage.setItem("token", data.token) // Save the token retorned by the back to the LocalStorage
             navigate('/home')
-
+            
         } catch (error) {
             console.log("Error when trying to login" + error)
         }
