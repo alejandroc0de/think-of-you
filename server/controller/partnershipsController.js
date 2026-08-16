@@ -1,6 +1,4 @@
 const {partnerCheckService, partnerSearchService, partnerLinkingService} = require('../services/partnershipsService.js')
-const pool = require('../db') // db queries 
-const express = require('express')
 
 function partnershipsController(){
 
@@ -32,7 +30,7 @@ function partnershipsController(){
                     return
                 }
                 try {
-                    const result2 = partnerLinkingService(client,partner_id)
+                    const result2 = await partnerLinkingService(client,partner_id)
                     res.status(200).json({message: "Partnership updated succesfully"})
                 } catch (error) {
                     if(error.code == "23505"){
