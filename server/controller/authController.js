@@ -1,8 +1,8 @@
+const {registerUserService,loginUserService} = require('../services/authService.js')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 const jwt = require('jsonwebtoken')
-const pool = require('../db') // import db file to make queries 
 
 function authController(){
 
@@ -11,7 +11,7 @@ function authController(){
         try {
             const {name,username,password} = req.body
             const hashedPassword = await bcrypt.hash(password,saltRounds) // Encrypt password
-            const result = await pool.query("INSERT INTO users (name, username, password) VALUES ($1, $2, $3)",[name,username,hashedPassword])
+            const result = await registerUserService(name,username,hashedPassword) // Call to the service to communicate with DB!
             res.status(201).json({message:"Response Ok"})
         } catch (error) {
             res.status(400).json({message: "Error when registering to the db", error: error.code})
@@ -22,9 +22,9 @@ function authController(){
     async function loginUser(req,res) {
         try {
             const {username,password} = req.body
-            const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]) // I get the user info if exists
+            const result = await loginUserService(username); // I get the user info if exists
             if (result.rowCount>0){
-                if (await bcrypt.compare(password , result.rows[0].password)){                      // Compare with password
+                if (await bcrypt.compare(password , result.rows[0].password)){    // Compare with password
                     // JWT!
                     var token = jwt.sign({"username":result.rows[0].username, "id":result.rows[0].id},process.env.SECRET_KEY,{expiresIn: '7d'})  // Add JWT and encrypt username and Id for middleware
                     res.status(200).json({token: token}) // I return the token once user is logged in 
