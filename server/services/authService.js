@@ -1,6 +1,5 @@
 const pool = require('../db') // import db file to make queries 
 
-// this is a function to seperate functions from the routes
 
 async function registerUserService(name,username,hashedPassword) {
     const result = await pool.query("INSERT INTO users (name, username, password) VALUES ($1, $2, $3)",[name,username,hashedPassword])
