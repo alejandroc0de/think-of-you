@@ -18,3 +18,7 @@ git push origin develop
 git checkout main # Vuelve a main
 
 
+# Postgres
+brew services start postgresql@18  
+
+brew services stop postgresql@18

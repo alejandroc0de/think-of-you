@@ -7,7 +7,7 @@ const pool = require('../db') // import db file to make queries
 function authController(){
 
     // REGISTER REQUEST - We received the register req, and save the password to the DB
-    async function registerUser(){
+    async function registerUser(req,res){
         try {
             const {name,username,password} = req.body
             const hashedPassword = await bcrypt.hash(password,saltRounds) // Encrypt password
@@ -19,7 +19,7 @@ function authController(){
     }
 
     // LOGIN REQUEST - We received the login request, bring the client, and then compare if password is the same. RowCount > 0 in case no results found 
-    async function loginUser() {
+    async function loginUser(req,res) {
         try {
             const {username,password} = req.body
             const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]) // I get the user info if exists
