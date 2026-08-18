@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import {io} from 'socket.io-client'
 import { jwtDecode } from "jwt-decode"; // Decode token with username and id 
-import { fetchMessages, getPartnerService, sendMessage, setPartner } from '../../services/messageService'; // service for calls to backend 
- 
+import { fetchMessages, sendMessage } from '../../services/messageService'; // service for calls to backend 
+import { getPartnerService,setPartner } from '../../services/partnershipsService';
 
 
 
@@ -235,7 +235,7 @@ function Home(){
                 }
                 </>
             )}
-                        
+
             {/* FOOTER */}
 
             <div id='logoutButton' className=' h-[10%] flex flex-col justify-center'>
