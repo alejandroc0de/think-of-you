@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import {io} from 'socket.io-client'
 import { jwtDecode } from "jwt-decode"; // Decode token with username and id 
+import { fetchMessages, getPartnerService, sendMessage, setPartner } from '../../services/messageService'; // service for calls to backend 
  
 
 
@@ -69,11 +70,7 @@ function Home(){
     useEffect(() => {
         async function getPartnerInfo(){
             try{
-                const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`,{
-                    method: "GET",
-                    headers : {Authorization : `Bearer ${localStorage.getItem('token')}`,
-                                'Content-Type' : "application/json"}
-                    })
+                const result = await getPartnerService() // Service to get partner info 
                 if(result.ok){
                     setHasPartner(true)
                 }
@@ -91,12 +88,8 @@ function Home(){
     useEffect(() => {
         async function fetchData(){
             try {
-                const result = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
-                    method: "GET",
-                    headers : {'Authorization' : `Bearer ${localStorage.getItem('token')}`,
-                                'Content-Type' : "application/json"}
-                })
-                const data = await result.json()
+                // Call to communicate with backend,, already parsed to json
+                const data = await fetchMessages()
                 setRecentMessages(data.recentMessages.reverse()) // Returned by backend in the res json 
                 setPartnerName(data.partnerName) // From the db i returned the partner name
             } catch (error) {
@@ -122,12 +115,7 @@ function Home(){
 
     async function handleSendMessage(){
         try {
-            const result = await fetch(`${import.meta.env.VITE_API_URL}/messages`,{
-                method: "POST",
-                headers  : {'Authorization' : `Bearer ${localStorage.getItem('token')}`, // Send token for middleware backend 
-                            "Content-Type":"application/json"},
-                body : JSON.stringify({message : "I am thinking of you"})
-            })
+            const result = await sendMessage()
             if(result.status !== 201 ){
                 const data = await result.json()
                 window.alert(data.message)
@@ -152,17 +140,11 @@ function Home(){
             return // If empty username
         }
         try {
-            const result = await fetch(`${import.meta.env.VITE_API_URL}/partnerships`, {
-                method: "POST",
-                headers: {'Authorization' : `Bearer ${localStorage.getItem('token')}`,
-                                'Content-Type' : "application/json"},
-                body: JSON.stringify({username : partnerUsername})
-            })
-            const data = await result.json()
+            const data = await setPartner() // call to backend to set partner
             if(data.error == "23505"){ // If username already has a partner
                 setAlreadyHasPartner(true)
             }
-            if(data.error == "007"){ // If username doesnt exists on the db 
+            if(data.error == "007"){ // If username doesnt exists on the db , james bondd
                 setPartnerExists(false)
             }
             if(result.ok){
@@ -253,10 +235,7 @@ function Home(){
                 }
                 </>
             )}
-
-                
-
-            
+                        
             {/* FOOTER */}
 
             <div id='logoutButton' className=' h-[10%] flex flex-col justify-center'>
