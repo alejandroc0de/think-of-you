@@ -6,3 +6,5 @@ only have one partner bruh, we use that as the where clause on the query, the se
 
 # When i add a new js file with routes,i need to add it to the server, cause thats what the router does, it removes responsability
 from server, but i have to tell server to use that route when it matches the word
+
+# I added an error handler. It will be initialize on the server.js and will be called when error do come up on the code

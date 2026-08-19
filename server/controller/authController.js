@@ -7,14 +7,16 @@ const jwt = require('jsonwebtoken')
 function authController(){
 
     // REGISTER REQUEST - We received the register req, and save the password to the DB
-    async function registerUser(req,res){
+    async function registerUser(req,res,next){
+        // next in order to use error handler
         try {
             const {name,username,password} = req.body
             const hashedPassword = await bcrypt.hash(password,saltRounds) // Encrypt password
             const result = await registerUserService(name,username,hashedPassword) // Call to the service to communicate with DB!
             res.status(201).json({message:"Response Ok"})
         } catch (error) {
-            res.status(400).json({message: "Error when registering to the db", error: error.code})
+            next(error) // error handler
+            // res.status(400).json({message: "Error when registering to the db", error: error.code})
         }
     }
 

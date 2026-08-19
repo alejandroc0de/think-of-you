@@ -11,8 +11,8 @@ function messageController(io,connectedUsers){
             const result = await getPartnerSender(sender)
             // Checking if sender has no partner, if he doesnt, rowcount is 0  RETURN
             if(result.rowCount === 0){
-                    res.status(404).json({message : "Sender does not have a partnet yet"})
-                    return
+                res.status(404).json({message : "Sender does not have a partnet yet"})
+                return
             }
 
             // Here we setup the info about who is sender and who is receiver
