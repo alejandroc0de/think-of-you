@@ -140,7 +140,8 @@ function Home(){
             return // If empty username
         }
         try {
-            const data = await setPartner() // call to backend to set partner
+            const result = await setPartner(partnerUsername) // call to backend to set partner
+            const data = await result.json()
             if(data.error == "23505"){ // If username already has a partner
                 setAlreadyHasPartner(true)
             }
@@ -155,8 +156,6 @@ function Home(){
             console.log(error)
         }
     }
-
-
 
 
     // Function to format time to locale time 
