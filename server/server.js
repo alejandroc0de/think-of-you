@@ -53,7 +53,6 @@ ioServer.use((socket , next) => {
 })
 // Second step after USE, id and username are saved to the socket object. So now we can save it to the JSON with the connections 
 ioServer.on("connection", (socket) => {
-    console.log("Someone connected to app", socket.id)
     connectedUsers[socket.user_id] = socket // Saving whole socket object to have access to emit ()
 
     socket.on("disconnect", () => {

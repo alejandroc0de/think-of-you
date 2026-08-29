@@ -12,7 +12,6 @@ require('dotenv').config()
             try {
                 const decoded = jwt.verify(token, process.env.SECRET_KEY)
                 req.user = decoded // I saved username and id so this is a JSON sent to the route to save the messages using id 
-                console.log(decoded)
                 next();
             } catch (error) {
                 res.status(401).json({message : "Token false"})
