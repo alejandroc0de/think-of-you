@@ -4,7 +4,7 @@ const AppError = require('../utils/AppError.js') // Importing error Handler
 
 function messageController(io,connectedUsers){
 
-    async function sendMessage(req,res) {
+    async function sendMessage(req,res,next) {
         const sender = req.user.id
         const message = req.body.message
         let receiver
@@ -13,8 +13,7 @@ function messageController(io,connectedUsers){
             const result = await getPartnerSender(sender)
             // Checking if sender has no partner, if he doesnt, rowcount is 0  RETURN
             if(result.rowCount === 0){
-                res.status(404).json({message : "Sender does not have a partnet yet"})
-                return
+                throw new AppError("Sender does not have a partner yet",404)
             }
 
             // Here we setup the info about who is sender and who is receiver
@@ -27,9 +26,8 @@ function messageController(io,connectedUsers){
             }
 
         } catch (error) {
-            res.status(404).json({message : "Sender does not have a partner yet"})
-                console.log(error)
-                return
+            next(error)
+            return // so code doesnt continue in case of error
         }
 
         // Now i send the message to the table messages 
@@ -41,13 +39,12 @@ function messageController(io,connectedUsers){
                 connectedUsers[receiver].emit("send",{"sender": sender, "time_sent": insertResult.rows[0].time_sent, "message_sent":message}) // Send the message to the receiver in Realtime
             }
         } catch (error) {
-            res.status(500).json({message : "There is a problem saving the message to the DB"})
-            console.log(error)
+            next(error)
         }
     }
 
 
-    async function getAllMessages(req,res) {
+    async function getAllMessages(req,res, next) {
         const sender = req.user.id // via middleware id for sender
         try {
             const result = await getMessages(sender)
@@ -64,13 +61,13 @@ function messageController(io,connectedUsers){
                     const result2 = await getPartnerName(partner)
                     partnerName = result2.rows[0].name
                 } catch (error) {
-                    res.status(500).json({message: "Error fetching partner name", error : error})
-                    console.log(error)
+                    next(error) // i keep the original error from pg to display it in logs
+                    return // code below so return to stop execution 
                 }
             }    
             res.status(200).json({recentMessages: result.rows, message: "Messages fetched properly", partnerName : partnerName})
         } catch (error) {
-            res.status(500).json({message: "Error fetching last messages", error : error})
+            next(error)
         }
     }
 
