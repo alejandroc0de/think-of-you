@@ -3,6 +3,7 @@ require('dotenv').config()
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 const jwt = require('jsonwebtoken')
+const AppError = require('../utils/AppError.js')
 
 function authController(){
 
@@ -20,7 +21,7 @@ function authController(){
     }
 
     // LOGIN REQUEST - We received the login request, bring the client, and then compare if password is the same. RowCount > 0 in case no results found 
-    async function loginUser(req,res) {
+    async function loginUser(req,res, next) {
         try {
             const {username,password} = req.body
             const result = await loginUserService(username); // I get the user info if exists
@@ -30,14 +31,13 @@ function authController(){
                     var token = jwt.sign({"username":result.rows[0].username, "id":result.rows[0].id},process.env.SECRET_KEY,{expiresIn: '7d'})  // Add JWT and encrypt username and Id for middleware
                     res.status(200).json({token: token}) // I return the token once user is logged in 
                 }else{
-                    res.status(401).json({result :"Wrong Credentials"})
+                    throw new AppError("Wrong Credentials",401)
                 }
         }else{
-            res.status(401).json({result :"Wrong Credentials"})
+            throw new AppError("Wrong Credentials",401)
         }
         } catch (error) {
-            res.status(400).send("Error when trying to login from server")
-            console.log(error)   
+            next(error)
         }   
     }
     return {registerUser,loginUser}
@@ -45,5 +45,3 @@ function authController(){
 
 module.exports = authController
 
-
-// we gotta install postgress to check functions
