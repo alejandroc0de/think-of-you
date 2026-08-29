@@ -16,7 +16,6 @@ function authController(){
             res.status(201).json({message:"Response Ok"})
         } catch (error) {
             next(error) // error handler
-            // res.status(400).json({message: "Error when registering to the db", error: error.code})
         }
     }
 

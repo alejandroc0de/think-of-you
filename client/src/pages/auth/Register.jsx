@@ -30,7 +30,7 @@ function Register(){
             if(!result.ok){
                 const data = await result.json()
                 if(data.error === "23505"){ // code for unique clause violation 
-                    window.alert("Username Already Taken")
+                    window.alert(data.message) // Username taken from backend error handler
                     return
                 }else{
                     window.alert("Error when saving info to the DB")
