@@ -5,7 +5,7 @@ const {Server} = require('socket.io') // So http for createServer, that server r
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const PORT = process.env.PORT || 3000
-const errorHandler = require('./middleware/errorHandler.js')
+const errorHandler = require('./middleware/errorHandler') // importing error handler
 
 const connectedUsers = {} // Json obj to save connected users, this is in server memory 
 
@@ -61,7 +61,7 @@ ioServer.on("connection", (socket) => {
     })
 })
 
-app.use(errorHandler) // Whenever an error comes up, app will look for handler (4 args)
+app.use(errorHandler)
 
 server.listen(PORT, () => {
     console.log(`Server running in ${PORT}`)

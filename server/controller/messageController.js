@@ -1,4 +1,6 @@
 const {getMessages, getPartnerName, getPartnerSender,insertMessage} = require('../services/messageService.js')
+const AppError = require('../utils/AppError.js') // Importing error Handler
+
 
 function messageController(io,connectedUsers){
 

@@ -1,4 +1,3 @@
-
 function errorHandler(err,req,res,next){ // 4 args, so node knows it is an error handler
     console.log(err) // This helps with debugging
 
