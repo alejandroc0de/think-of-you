@@ -29,7 +29,7 @@ function Register(){
             const result = await registerService(name,username,password)
             if(!result.ok){
                 const data = await result.json()
-                if(data.error === "23505"){ // code for unique clause violation 
+                if(result.status === 400){ // code for unique clause violation 
                     window.alert(data.message) // Username taken from backend error handler
                     return
                 }else{
