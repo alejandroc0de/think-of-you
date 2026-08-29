@@ -140,13 +140,17 @@ function Home(){
             return // If empty username
         }
         try {
-            const result = await setPartner(partnerUsername) // call to backend to set partner
-            const data = await result.json()
-            if(data.error == "23505"){ // If username already has a partner
+            const result = await setPartner(partnerUsername) // call to backend to set partner, no parsing 
+            if(result.status == 400){ // If username already has a partner
                 setAlreadyHasPartner(true)
             }
-            if(data.error == "007"){ // If username doesnt exists on the db , james bondd
+            // The error handler sends the status not in a json body but in the http request
+            if(result.status == 404 ){ // If username doesnt exists on the db
                 setPartnerExists(false)
+            }
+            if(result.status == 422){
+                window.alert("You cant link with yourself")
+                return
             }
             if(result.ok){
                 window.alert("Partner linked!")
