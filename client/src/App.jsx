@@ -8,12 +8,9 @@ import Playlist from './pages/app/Playlist';
 
 
 function App() {
-  
-
-
 
   return(
-    <div className='flex flex-col h-screen overflow-hidde++'>
+    <div className='flex flex-col h-dvh overflow-hidden'>
       <BrowserRouter>
       <Navbar/>
         <Routes>
