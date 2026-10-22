@@ -13,8 +13,6 @@ function Login(){
     const [wrongCredentials, setWrongCredentials] = useState(false)
 
 
-
-
     function handleUsername(event){
         setUsername(event.target.value)
     }
@@ -50,8 +48,6 @@ function Login(){
     function handleRegister(){
         navigate('/register')
     }
-
-
 
     return(
         <div className="flex flex-col items-center bg-amber-50 h-screen justify-center bg-cover bg-center bg-no-repeat" style={{fontFamily:"Gabriela"}} >

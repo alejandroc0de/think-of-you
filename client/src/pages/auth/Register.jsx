@@ -49,7 +49,7 @@ function Register(){
 
     return(
 
-        <div className="flex flex-col justify-center items-center h-screen  " style={{fontFamily: 'Gabriela'}}>
+        <div className="flex flex-col justify-center bg-amber-50 items-center h-screen  " style={{fontFamily: 'Gabriela'}}>
             <h1 className="font-bold hover:scale-115 duration-200 text-3xl text-center md:text-7xl" >Register to thinkofyou</h1>
             <input className="text-2xl p-5 m-5 border-b-2 border-gray-300 w-[90%] md:w-auto md:text-4xl hover:scale-115 duration-200 focus:outline-0" value={name} onChange={handleName} type="text" name="" id="" placeholder="Enter your name" />
             <input className="text-2xl p-5 m-5 border-b-2 border-gray-300 w-[90%] md:w-auto md:text-4xl hover:scale-115 duration-200 focus:outline-0" value={username} onChange={handleUsername} type="text"placeholder="Create a username" />

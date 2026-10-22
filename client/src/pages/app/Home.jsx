@@ -195,9 +195,8 @@ function Home(){
     return (
         <div className='md:flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat bg-amber-50' >
             {/* HEADER */}
-            <div id='header' className='flex flex-col font-bold items-center  justify-center text-4xl h-[15%] md:text-6xl md:h-[25%]' style={{fontFamily: 'Rouge Script'}}>
-                <h1> Welcome {myUsername} </h1>
-                <h5 className='text-4xl'>Partner : {partnerName} </h5>
+            <div id='header' className='flex flex-col items-center gap-2.5 justify-center text-4xl h-[10%] md:text-6xl md:h-[25%]' style={{fontFamily: 'Gabriela'}}>
+                <h1> Welcome {myUsername} & {partnerName}</h1>
             </div>
 
             {loading ? (<div className="border-4 border-stone-300 border-t-stone-800 rounded-full animate-spin w-10 h-10 md:w-12 md:h-12 "></div>) : 
@@ -205,9 +204,9 @@ function Home(){
                 <>
                 {/* CONTENT HAS PARTNER */}
 
-                {hasPartner && <div className='flex w-screen justify-evenly flex-col h-[75%] md:flex-row md:h-[65%] '>
+                {hasPartner && <div className='flex w-screen justify-evenly flex-col h-[80%] md:flex-row md:h-[65%] '>
 
-                    <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200 backdrop-blur-xsz shadow-md bg-amber-50 w-[full] md:w-[35%]' >
+                    <div id='lastMessages' className='border-2 overflow-hidden p-3 rounded-2xl border-gray-200 backdrop-blur-xsz shadow-md bg-amber-50 w-[full] md:w-[35%]' style={{fontFamily: 'Gabriela'}} >
                         {recentMessages && recentMessages.map((item,index) => (
                             <div className={item.sender == myId? 'text-right flex flex-col md:m-2 ':'text-left  flex flex-col md:m-2 '} key={index}>
                                 <p className= {item.sender == myId ? "bg-stone-200 shadow-2xs border-2 border-gray-200  rounded-2xl p-1 w-fit ml-auto" : "bg-white border-2 border-gray-300 rounded-2xl p-1 w-fit"}>{item.message_sent}</p> 
@@ -218,7 +217,7 @@ function Home(){
                     </div>
 
                     <div id='content' className=' flex flex-col justify-center '>
-                        <button className='border-2 shadow-md py-4 px-8 bg-stone-800 rounded-full  p-5  text-white font-bold text-3xl m-3 mb-1 md:text-4xl md:mt-5 md:mb-10 hover:bg-stone-600 transition-colors ' style={{fontFamily: 'Rouge Script'}} onClick={handleSendMessage}>I am thinking of you</button>
+                        <button className='border-2 shadow-md py-4 px-8 bg-stone-800 rounded-full  p-5  text-white font-bold text-2xl m-3 mb-1 md:text-4xl md:mt-5 md:mb-10 hover:bg-stone-600 transition-colors ' style={{fontFamily: 'Gabriela'}} onClick={handleSendMessage}>I am thinking of you</button>
                     </div>
                 </div>
                 }
@@ -226,11 +225,11 @@ function Home(){
                 {/* CONTENT HAS NOT PARTNER */}
                 {!hasPartner &&    
                     <div>
-                        <div className=' flex flex-col text-3xl font-bold leading-normal m-[5%] w-[90%] md:text-5xl md:m-auto  ' style={{fontFamily: 'Rouge Script'}}>
-                            <p>You dont have a partner, to use the app please first link your partner</p>
-                            <label htmlFor="">Partner username: </label>
-                            <input value={partnerUsername} onChange={handlePartnerUsername} type="text" placeholder='Enter Username'/>
-                            <button onClick={handleSetPartner}>Submit</button>
+                        <div className=' flex flex-col text-3xl leading-normal m-[5%] w-[90%] md:text-5xl md:m-auto  ' style={{fontFamily:"Gabriela"}}>
+                            <p className='text-auto p-1 md:text-2xl'>You dont have a partner, to use the app please first link your partner</p>
+                            <label htmlFor="" className='text-auto p-1 md:text-2xl'>Partner username: </label>
+                            <input value={partnerUsername} onChange={handlePartnerUsername} className='text-auto p-1 md:text-2xl' type="text" placeholder='Enter Username'/>
+                            <button onClick={handleSetPartner} className=''>Submit</button>
                             {alreadyHasPartner && <p className='text-5xl text-red-600 font-bold leading-normal text-center'>This user already has a partner </p>}
                             {!partnerExists && <p className='text-5xl text-red-600 font-bold leading-normal text-center'> This username is not on thinkingofyou </p>}
                         </div> 
@@ -241,8 +240,8 @@ function Home(){
 
             {/* FOOTER */}
 
-            <div id='logoutButton' className=' h-[10%] flex flex-col justify-center'>
-                <button onClick={handleLogout} className=' font-bold hover:scale-110 text-3xl md:text-4xl hover:text-red-600 duration-200' style={{fontFamily: 'Rouge Script'}}>Logout</button>
+            <div id='logoutButton' className=' h-[7%] flex flex-col justify-center'>
+                <button onClick={handleLogout} className=' font-bold hover:scale-110 text-3xl md:text-4xl hover:text-red-600 duration-200' style={{fontFamily: 'Gabriela'}}>Logout</button>
             </div>
         </div>
     )
