@@ -193,7 +193,7 @@ function Home(){
 
 
     return (
-        <div className='md:flex flex-col items-center justify-center h-screen bg-cover bg-center bg-no-repeat bg-amber-50' >
+        <div className='md:flex flex-col items-center justify-center flex-1 min-h-0 bg-cover bg-center bg-no-repeat bg-amber-50' >
             {/* HEADER */}
             <div id='header' className='flex flex-col items-center gap-2.5 justify-center text-4xl h-[10%] md:text-6xl md:h-[25%]' style={{fontFamily: 'Gabriela'}}>
                 <h1> Welcome {myUsername} & {partnerName}</h1>
